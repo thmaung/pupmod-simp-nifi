@@ -17,4 +17,11 @@ class nifi::params {
       fail("${::operatingsystem} not supported")
     }
   }
+
+  ## Referenced Variables
+  $global_user          = 'root'
+  $global_group         = 'root'
+  $global_mode          = '0640'
+
+  $banner_text          = 'TODO: OP NIFI MODULE'
 }
