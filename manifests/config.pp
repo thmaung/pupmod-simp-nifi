@@ -6,6 +6,7 @@ class nifi::config (
   $global_owner            = $::nifi::params::global_owner,
   $global_group            = $::nifi::params::global_group,
 
+  $nifi_home               = $::nifi::params::nifi_home,
   $conf_template           = 'nifi/conf/nifi.properties.erb',
   $bootstrap_template      = 'nifi/conf/bootstrap.conf.erb',
 
@@ -31,16 +32,25 @@ class nifi::config (
     mode  => $global_mode,
   }
 
-  file { $conf_dir:
+  file { $service_file:
+    ensure   => file,
+    owner    => 'root',
+    group    => 'root',
+    mode     => '0755',
+    content  => template('nifi/service/nifi.erb'),
+    notify   => Service['nifi'],
+  }
+
+  file { "${nifi_home}/${conf_dir}":
     ensure => directory,
   }
 
-  file { "${conf_dir}/nifi.properties":
+  file { "${nifi_home}/${conf_dir}/nifi.properties":
     ensure  => file,
     content => template($conf_template),
   } 
   
-  file { "${conf_dir}/bootstrap.conf":
+  file { "${nifi_home}/${conf_dir}/bootstrap.conf":
     ensure  => file,
     content => template($bootstrap_template),
   } 

@@ -8,11 +8,13 @@ class nifi::params {
     'Debian': {
       $package_name         = 'nifi'
       $service_name         = 'nifi'
+      $service_file         = '/etc/init.d/nifi'
       $security_limits_file = '/etc/security/limits.conf'
     }
     'RedHat', 'Amazon': {
       $package_name         = 'nifi'
       $service_name         = 'nifi'
+      $service_file         = '/etc/init.d/nifi'
       $security_limits_file = '/etc/security/limits.conf'
     }
     default: {
@@ -25,14 +27,15 @@ class nifi::params {
   $global_group         = 'root'
   $global_mode          = '0640'
 
-  $conf_dir             = '/opt/nifi/default/conf'
-  $lib_dir              = '/opt/nifi/default/lib'
+  $nifi_home            = '/opt/nifi/default/'
+  $conf_dir             = './conf'
+  $lib_dir              = './lib'
   $is_ncm               = false
   $cluster_mode         = false
 
   ## Bootstrap Configurations
-  $java_xms             = '256MB'
-  $java_xmx             = '512MB'
+  $java_xms             = '512m'
+  $java_xmx             = '512m'
 
   ## Core Configuration settings
   $banner_text          = 'TODO: OP NIFI MODULE'

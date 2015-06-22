@@ -5,10 +5,13 @@
 #
 class nifi::service {
 
+  $service_file = $::nifi::params::service_file
+
   service { $::nifi::service_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
+    require    => File[$service_file],
   }
 }
